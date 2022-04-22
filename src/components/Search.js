@@ -12,13 +12,21 @@ class Search extends React.Component {
     if (e.target.value.length > 0) {
       search(e.target.value).then((books) => {
         if (books.length > 0) {
+          // Get the correct shelf for the queried books
+          books.forEach((book) => {
+            this.props.books.find((b) => {
+              if (b.id === book.id) {
+                book.shelf = b.shelf;
+              }
+            });
+          });
           this.setState(() => ({
             error: false,
             searchedBooks: books,
           }));
         } else {
           // When user enters an invalid query
-          this.setState((prevState) => ({
+          this.setState(() => ({
             error: true,
           }));
         }
@@ -33,6 +41,7 @@ class Search extends React.Component {
   render() {
     return (
       <div className="search-books">
+        {console.log('testttt', this.props.books)}
         <div className="search-books-bar">
           <Link to="/">
             <button className="close-search">Close</button>
