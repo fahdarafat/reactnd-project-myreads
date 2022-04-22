@@ -12,7 +12,9 @@ class Book extends React.Component {
               style={{
                 width: 128,
                 height: 188,
-                backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`,
+                backgroundImage: this.props.book.imageLinks
+                  ? `url(${this.props.book.imageLinks.thumbnail})`
+                  : `url(./icons/add.svg)`,
               }}
             />
             <div className="book-shelf-changer">
@@ -20,7 +22,7 @@ class Book extends React.Component {
                 onChange={(e) =>
                   this.props.onUpdateShelf(this.props.book, e.target.value)
                 }
-                value={this.props.book.shelf}
+                value={this.props.book.shelf ? this.props.book.shelf : 'none'}
               >
                 <option value="move" disabled>
                   Move to...
